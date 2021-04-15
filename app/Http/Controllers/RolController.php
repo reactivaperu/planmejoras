@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rol;
+use ArrayObject;
 use Illuminate\Http\Request;
 
 class RolController extends Controller
@@ -15,7 +16,7 @@ class RolController extends Controller
     public function index()
     {
         //
-        $datos['rols'] = Rol::paginate(5);
+        $datos['rols'] = Rol::paginate(1);
         return view('rol.index', $datos);
     }
 
@@ -40,9 +41,20 @@ class RolController extends Controller
     {
         //
         //$datosRol = request()->all();
+        $campos = [
+            'nombre'=>'required|string|max:100',
+            'descripcion'=>'required|string|max:200'
+        ];
+        $mensaje = [
+            'required'=>'El :attribute es requerido',
+            "descripcion.required"=>'La descripcion es requerida'
+        ];
+        $this->validate($request,$campos,$mensaje);
+
         $datosRol = request()->except('_token');
         Rol::insert($datosRol);
-        return response()->json($datosRol);
+        //return response()->json($datosRol);
+        return redirect('rol')->with('mensaje','Rol creado');
     }
 
     /**
@@ -59,7 +71,7 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\Rol  $rol->id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -76,9 +88,14 @@ class RolController extends Controller
      * @param  \App\Models\Rol  $rol
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rol $rol)
+    public function update(Request $request, $id)
     {
         //
+        $datosRol = request()->except(['_token','_method']);
+        Rol::where('id','=',$id)->update($datosRol);
+        $rol = Rol::findOrFail($id);
+        //return view('rol.edit',compact('rol'));
+        return redirect('rol')->with('mensaje','Rol modificado');
     }
 
     /**

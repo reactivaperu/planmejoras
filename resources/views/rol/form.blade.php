@@ -1,10 +1,30 @@
-<label for="nombre">Nombre</label>
-<input type="text" name="nombre" id="nombre" value="{{ $rol->nombre }}">
-<br>
+@if(isset($modo))
+<h1>{{ $modo }} rol</h1>
+@endif
 
-<label for="descripcion">Descripcion</label>
-<input type="text" name="descripcion" id="descripcion" value="{{ $rol->descripcion }}">
-<br>
+@if(count($errors)>0)
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <ul>
+    @foreach($errors->all() as $error)
+        <li> <strong> {{ $error }}! </strong> </li>
+    @endforeach
+    </ul>
+</div>
+@endif
 
-<input type="submit" value="Enviar">
+<div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($rol->nombre)?$rol->nombre:old('nombre') }}" placeholder="Nombre">
+</div>
+
+
+<div class="form-group">
+    <label for="descripcion">Descripción</label>
+    <input class="form-control" type="text" name="descripcion" id="descripcion" value="{{ isset($rol->descripcion)?$rol->descripcion:old('descripcion') }}" placeholder="Descripción">
+</div>
+
+<input class="btn btn-success" type="submit" value="{{ $modo }} datos">
+
+<a class="btn btn-primary" href="{{ url('/rol') }}">Regresar</a>
 <br>
