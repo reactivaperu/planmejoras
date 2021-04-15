@@ -229,7 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Socialte' => Laravel\Socialite\Facades\Socialite::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
