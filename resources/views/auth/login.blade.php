@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-block btn-google" href="{{ url('login.google') }}">
+                        <a class="btn btn-lg btn-success btn-block" href="{{ url('auth/google') }}">
                             {{ __('Google') }}
                         </a>
 

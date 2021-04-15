@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolController;
-use App\Http\Controllers\GoogleController;
+//use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\Auth\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +30,5 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/home', [RolController::class, 'index'])->name('home');
 });
 
-Route::get('auth/google/redirect',[GoogleController::class,'redirect']);
-Route::get('auth/google/callback',[GoogleController::class,'callback']);
+Route::get('auth/google',[GoogleController::class,'redirectToGoogle']);
+Route::get('auth/google/callback',[GoogleController::class,'handleGoogleCallback']);

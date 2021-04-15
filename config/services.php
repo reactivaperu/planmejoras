@@ -14,9 +14,9 @@ return [
     |
     */
     'google' => [
-        'client_id' => env('632049361281-djsinb2j95cmprmmo5bbq1t827i48372.apps.googleusercontent.com'),
-        'client_secret' => env('qPvXk2T2wUhSieBggiFlanZz'),
-        'redirect' => 'http://127.0.0.1:8000/callback/google',
+        'client_id' => '632049361281-djsinb2j95cmprmmo5bbq1t827i48372.apps.googleusercontent.com',
+        'client_secret' => 'qPvXk2T2wUhSieBggiFlanZz',
+        'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
     ],
 
     'mailgun' => [
