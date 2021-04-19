@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\Auth\GoogleController;
 
@@ -14,21 +15,18 @@ use App\Http\Controllers\Auth\GoogleController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () { return view('auth.login'); })->middleware('guest');
 
-Route::get('/', function () { return view('auth.login'); });
-
-//Route::get('/rol', function () { return view('rol.index'); });
-//Route::get('/rol/create',[RolController::class,'create']);
 Route::resource('rol', RolController::class)->middleware('auth');
 
 Auth::routes(['register'=>false,'reset'=>false]);
 
-Route::get('/home', [RolController::class, 'index'])->name('home');
+//Route::get('/home', [RolController::class, 'index'])->name('home');
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/home', [RolController::class, 'index'])->name('home');
 });
 
-Route::get('/logged', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/logged', [HomeController::class,'index'])->name('home');
 Route::get('auth/google',[GoogleController::class,'redirectToGoogle']);
 Route::get('auth/google/callback',[GoogleController::class,'handleGoogleCallback']);
