@@ -24,7 +24,15 @@
 
 <body>
     <div class="auth">
-        <div class="auth-page">
+        <div class="auth-page flex-column">
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{$errors->first()}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <div class="auth-form p-4">
                 <h3 class="text-center">INICIAR SESIÓN</h3>
                 <h5 class="text-center my-3">Sistema de seguimiento al plan de mejora</h5>

@@ -16,6 +16,7 @@ class GoogleController extends Controller
      */
     public function redirectToGoogle()      // this function direct go to google
     {
+        //return Socialite::driver('google') ->with(['hd' => 'example.com'])->redirect();
         return Socialite::driver('google')->redirect();
     }
       
@@ -27,30 +28,24 @@ class GoogleController extends Controller
     public function handleGoogleCallback()  // this function get user login of googlre
     {
         try {
-    
             $user = Socialite::driver('google')->user();
-     
+            if(explode("@", $user->email)[1] !== 'uandina.edu.pe'){
+                return redirect('/')->withErrors(['Ingrese con una cuenta coorporativa']);
+            }
             $finduser = User::where('google_id', $user->id)->first();
-     
             if($finduser){
-     
                 Auth::login($finduser);
-    
                 return redirect('/logged');
-     
             }else{
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id'=> $user->id,
-                    'password' => encrypt('jorgecoco')
+                    'password' => encrypt('uandina')
                 ]);
-    
                 Auth::login($newUser);
-     
                 return redirect('/logged');
             }
-    
         } catch (Exception $e) {
             dd($e->getMessage());
         }
