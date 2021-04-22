@@ -12,6 +12,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -25,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{url('/img/logo_institucion.png')}}" alt="Logo Institución" class="img-fluid" width="120">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -34,8 +37,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('rol') }}">{{ __('Rols') }}</a>
+                        <li class="{{Request::is('planes')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Planes') }}</a>
+                        </li>
+                        <li class="{{Request::is('usuarios')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('usuarios') }}">{{ __('Usuarios') }}</a>
+                        </li>
+                        <li class="{{Request::is('roles')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('roles') }}">{{ __('Roles') }}</a>
                         </li>
                     </ul>
 

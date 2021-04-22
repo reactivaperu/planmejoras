@@ -35,16 +35,16 @@ class GoogleController extends Controller
             $finduser = User::where('google_id', $user->id)->first();
             if($finduser){
                 Auth::login($finduser);
-                return redirect('/logged');
+                return redirect('/home');
             }else{
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id'=> $user->id,
-                    'password' => encrypt('uandina')
+                    'tipo' => 'invitado'
                 ]);
                 Auth::login($newUser);
-                return redirect('/logged');
+                return redirect('/home');
             }
         } catch (Exception $e) {
             dd($e->getMessage());

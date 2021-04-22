@@ -26,5 +26,5 @@
 
 <input class="btn btn-success" type="submit" value="{{ $modo }} datos">
 
-<a class="btn btn-primary" href="{{ url('/rol') }}">Regresar</a>
+<a class="btn btn-primary" href="{{ url('/roles') }}">Regresar</a>
 <br>

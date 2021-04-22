@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ url( '/roles/'.$rol->id ) }}" method="post">
+    <form action="{{ url( '/usuarios/'.$user->id ) }}" method="post">
         @csrf
         {{ method_field('PATCH') }}
-        @include('rol.form',['modo'=>'Editar'])
+        @include('usuario.form',['modo'=>'Editar'])
     </form>
 </div>
 @endsection

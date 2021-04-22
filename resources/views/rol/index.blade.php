@@ -12,7 +12,7 @@
 @endif
 
 <h1>ROLES</h1>
-<a href="{{ url('/rol/create') }}" class="btn btn-success">Registrar rol</a>
+<a href="{{ url('/roles/create') }}" class="btn btn-success">Registrar rol</a>
 <br/>
 <br/>
 <table class="table table-light">
@@ -31,9 +31,9 @@
             <td>{{ $rol->nombre }}</td>
             <td>{{ $rol->descripcion }}</td>
             <td>
-                <a href="{{ url('/rol/'.$rol->id.'/edit') }}" class="btn btn-warning">EDITAR</a>
+                <a href="{{ url('/roles/'.$rol->id.'/edit') }}" class="btn btn-warning">EDITAR</a>
                 |
-                <form method="post" action="{{ url( '/rol/'.$rol->id ) }}" class="d-inline">
+                <form method="post" action="{{ url( '/roles/'.$rol->id ) }}" class="d-inline">
                     @csrf
                     {{ method_field('DELETE') }}
                     <input type="submit" value="BORRAR" onclick="return confirm('¿Quieres Borrar?')" class="btn btn-danger">    

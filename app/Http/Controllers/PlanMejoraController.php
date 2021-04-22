@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rol;
-use ArrayObject;
+use App\Models\PlanMejora;
+use App\Models\AccionMejora;
 use Illuminate\Http\Request;
 
-class RolController extends Controller
+class PlanMejoraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
-        $datos['rols'] = Rol::paginate(10);
-        return view('rol.index', $datos);
+        $datos['plan_mejoras'] = PlanMejora::paginate(10);
+        return view('planmejora.index', $datos);
     }
 
     /**
@@ -27,8 +26,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        //
-        return view('rol.create');
+        return view('planmejora.create');
     }
 
     /**
@@ -39,11 +37,13 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //$datosRol = request()->all();
         $campos = [
-            'nombre'=>'required|string|max:100',
-            'descripcion'=>'required|string|max:200'
+            'codigo'=>'required|string|max:10',
+            'nombre'=>'required|string|max:255',
+            'anio'=>'required|integer',
+            'creador'=>'required|integer',
+            'avance'=>'required|integer',
+            'estado'=>'required|string|max:255'
         ];
         $mensaje = [
             'required'=>'El :attribute es requerido',
@@ -51,19 +51,18 @@ class RolController extends Controller
         ];
         $this->validate($request,$campos,$mensaje);
 
-        $datosRol = request()->except('_token');
-        Rol::insert($datosRol);
-        //return response()->json($datosRol);
-        return redirect('rol')->with('mensaje','Rol creado');
+        $datosPlan = request()->except('_token');
+        PlanMejora::insert($datosPlan);
+        return redirect('planes')->with('mensaje','Plan de mejora creado creado');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\PlanMejora  $planMejora
      * @return \Illuminate\Http\Response
      */
-    public function show(Rol $rol)
+    public function show(PlanMejora $planMejora)
     {
         //
     }
@@ -71,43 +70,39 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rol  $rol->id
+     * @param  \App\Models\PlanMejora  $planMejora
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-        $rol = Rol::findOrFail($id);
-        return view('rol.edit',compact('rol'));
+    {        
+        $plan = PlanMejora::findOrFail($id);
+        $acciones = AccionMejora::where('idPlan','=',$plan->id)->paginate(10);
+        return view('planmejora.edit',compact(['plan','acciones']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\PlanMejora  $planMejora
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        $datosRol = request()->except(['_token','_method']);
-        Rol::where('id','=',$id)->update($datosRol);
-        $rol = Rol::findOrFail($id);
-        //return view('rol.edit',compact('rol'));
-        return redirect('rol')->with('mensaje','Rol modificado');
+        $datosPlan = request()->except(['_token','_method']);
+        PlanMejora::where('id','=',$id)->update($datosPlan);
+        return redirect('planes')->with('mensaje','Plan de mejora modificado');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\PlanMejora  $planMejora
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
-        Rol::destroy($id);
-        return redirect('rol');
+        PlanMejora::destroy($id);
+        return redirect('planes');
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rol;
-use ArrayObject;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class RolController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
-        $datos['rols'] = Rol::paginate(10);
-        return view('rol.index', $datos);
+        $datos['users'] = User::paginate(10);
+        return view('usuario.index', $datos);
     }
 
     /**
@@ -27,8 +25,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        //
-        return view('rol.create');
+        return view('usuario.create');
     }
 
     /**
@@ -39,11 +36,10 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //$datosRol = request()->all();
         $campos = [
-            'nombre'=>'required|string|max:100',
-            'descripcion'=>'required|string|max:200'
+            'name'=>'required|string|max:100',
+            'email'=>'required|string|max:200',
+            'tipo'=>'required|string|max:200'
         ];
         $mensaje = [
             'required'=>'El :attribute es requerido',
@@ -51,19 +47,18 @@ class RolController extends Controller
         ];
         $this->validate($request,$campos,$mensaje);
 
-        $datosRol = request()->except('_token');
-        Rol::insert($datosRol);
-        //return response()->json($datosRol);
-        return redirect('rol')->with('mensaje','Rol creado');
+        $datosUser = request()->except('_token');
+        User::insert($datosUser);
+        return redirect('usuarios')->with('mensaje','Usuario creado');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Rol $rol)
+    public function show(User $user)
     {
         //
     }
@@ -71,43 +66,38 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rol  $rol->id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-        $rol = Rol::findOrFail($id);
-        return view('rol.edit',compact('rol'));
+    {        
+        $user = User::findOrFail($id);
+        return view('usuario.edit',compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        $datosRol = request()->except(['_token','_method']);
-        Rol::where('id','=',$id)->update($datosRol);
-        $rol = Rol::findOrFail($id);
-        //return view('rol.edit',compact('rol'));
-        return redirect('rol')->with('mensaje','Rol modificado');
+        $datosUser = request()->except(['_token','_method']);
+        User::where('id','=',$id)->update($datosUser);
+        return redirect('usuarios')->with('mensaje','Usuario modificado');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rol  $rol
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
-        Rol::destroy($id);
-        return redirect('rol');
+        User::destroy($id);
+        return redirect('usuarios');
     }
 }

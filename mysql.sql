@@ -1,0 +1,16 @@
+CREATE TABLE `accion_mejora` (
+  `id` int NOT NULL PRIMARY KEY,
+  `nombre` text,
+  `resultado` int,
+  `valor` int,
+  `fechaInicio` date,
+  `fechaFin` date,
+  `semestreEjecucion` text,
+  `duracion` int,
+  `recursos` text,
+  `metas` text,
+  `responsable` int,
+  `estado` text,
+  `avance` text,
+  `incador` text,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
