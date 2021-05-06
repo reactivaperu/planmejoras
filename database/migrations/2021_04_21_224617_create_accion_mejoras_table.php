@@ -29,6 +29,7 @@ class CreateAccionMejorasTable extends Migration
             $table->string('estado');
             $table->string('avance');
             $table->string('indicador');
+            $table->string('prioridad');
             $table->timestamps();
         });
     }

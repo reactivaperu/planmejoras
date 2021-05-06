@@ -17,11 +17,6 @@
         </div>
 
         <div class="form-group">
-            <label for="resultado">Resultado</label>
-            <input class="form-control" type="number" name="resultado" id="resultado" value="{{ isset($accion->resultado)?$accion->resultado:old('resultado') }}" placeholder="Resultado">
-        </div>
-
-        <div class="form-group">
             <label for="valor">Valor</label>
             <input class="form-control" type="number" name="valor" id="valor" value="{{ isset($accion->valor)?$accion->valor:old('valor') }}" placeholder="Valor">
         </div>
@@ -45,6 +40,11 @@
             <label for="semestreEjecucion">Semestre Ejecución</label>
             <input class="form-control" type="text" name="semestreEjecucion" id="semestreEjecucion" value="{{ isset($accion->semestreEjecucion)?$accion->semestreEjecucion:old('semestreEjecucion') }}" placeholder="Semestre Ejecución">
         </div>
+
+        <div class="form-group">
+            <label for="indicador">Indicador</label>
+            <input class="form-control" type="text" name="indicador" id="indicador" value="{{ isset($accion->indicador)?$accion->indicador:old('indicador') }}" placeholder="indicador">
+        </div>
     </div>
     <div class="col-6 p-2">
             
@@ -60,7 +60,13 @@
 
         <div class="form-group">
             <label for="responsable">Responsable</label>
-            <input class="form-control" type="number" name="responsable" id="responsable" value="{{ isset($accion->responsable)?$accion->responsable:old('responsable') }}" placeholder="Responsable">
+            <select class="form-control" name="responsable" id="responsable">
+                @if(isset($users))
+                @foreach( $users as $user )
+                <option value="{{ $user->id }}" {{ isset($accion->responsable)? ($accion->responsable==$user->id ? 'selected':'') : '' }} >{{ $user->name }}</option>                
+                @endforeach
+                @endif
+            </select>
         </div>
 
         <div class="form-group">
@@ -74,9 +80,17 @@
         </div>
 
         <div class="form-group">
-            <label for="indicador">Indicador</label>
-            <input class="form-control" type="text" name="indicador" id="indicador" value="{{ isset($accion->indicador)?$accion->indicador:old('indicador') }}" placeholder="indicador">
+            <label for="resultado">Resultado</label>
+            <input class="form-control" type="number" name="resultado" id="resultado" value="{{ isset($accion->resultado)?$accion->resultado:old('resultado') }}" placeholder="Resultado">
         </div>
 
+        <div class="form-group">
+            <label for="prioridad">Prioridad</label>
+            <select class="form-control" name="prioridad" id="prioridad" value="{{ isset($accion->prioridad)?$accion->prioridad:old('prioridad') }}">
+                <option value="Alta" {{ isset($accion->prioridad)? ($accion->prioridad=='Alta' ? 'selected':'') : '' }}>Alta</option>
+                <option value="Media" {{ isset($accion->prioridad)? ($accion->prioridad=='Media' ? 'selected':'') :'' }}>Media</option>
+                <option value="Baja" {{ isset($accion->prioridad)? ($accion->prioridad=='Baja' ? 'selected':'') :'' }}>Baja</option>
+            </select>
+        </div>
     </div>
 </div>

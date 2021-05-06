@@ -25,9 +25,9 @@
 <div class="form-group">
     <label for="tipo">Tipo</label>
     <select class="form-control" name="tipo" id="tipo" value="{{ isset($user->tipo)?$user->tipo:old('tipo') }}">
-        <option value="Administrador" {{(isset($user->tipo)=='Administrador')?'selected':''}}>Administrador</option>
-        <option value="Docentecomite" {{(isset($user->tipo)=='Docentecomite')?'selected':''}}>Docentecomite</option>
-        <option value="Invitado" {{(isset($user->tipo)=='Invitado')?'selected':''}}>Invitado</option>
+        <option value="Administrador" {{ isset($user->tipo)? ($user->tipo=='Administrador'?'selected':'') : '' }}>Administrador</option>
+        <option value="Docentecomite" {{ isset($user->tipo)? ($user->tipo=='Docentecomite'?'selected':'') : '' }}>Docentecomite</option>
+        <option value="Invitado" {{ isset($user->tipo)? ($user->tipo=='Invitado'?'selected':'') : '' }}>Invitado</option>
     </select>
 </div>
 

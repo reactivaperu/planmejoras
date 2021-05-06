@@ -22,9 +22,9 @@ class ActividadAccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($idAccion)
     {
-        //
+        return view('actividadaccion.create',['idAccion'=>$idAccion]);
     }
 
     /**
@@ -35,7 +35,27 @@ class ActividadAccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = [
+            'idAccion' => 'required|integer',
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'fechaInicio' => 'required|date|max:255',
+            'fechaFin' => 'required|date|max:255',
+            'duracion' => 'required|integer',
+            'estado' => 'required|string|max:255',
+            //'archivo' => 'required|string|max:255'
+        ];
+        $mensaje = [
+            'required'=>'El :attribute es requerido',
+            "descripcion.required"=>'La descripcion es requerida'
+        ];
+        $this->validate($request,$campos,$mensaje);
+        $datosAccion = request()->except('_token');
+        if($request->hasFile('archivo')){
+            $datosAccion['archivo'] = $request->file('archivo')->store('uploads','public');
+        } else { $datosAccion['archivo'] = 'FALTA ARCHIVO'; }
+        ActividadAccion::insert($datosAccion);
+        return redirect('acciones/' . $datosAccion['idAccion'] . '/edit')->with('mensaje','Actividad de mejora creada');
     }
 
     /**
@@ -55,9 +75,10 @@ class ActividadAccionController extends Controller
      * @param  \App\Models\ActividadAccion  $actividadAccion
      * @return \Illuminate\Http\Response
      */
-    public function edit(ActividadAccion $actividadAccion)
+    public function edit($id)
     {
-        //
+        $actividad = ActividadAccion::findOrFail($id);
+        return view('actividadaccion.edit',compact(['actividad']));
     }
 
     /**
@@ -67,9 +88,11 @@ class ActividadAccionController extends Controller
      * @param  \App\Models\ActividadAccion  $actividadAccion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ActividadAccion $actividadAccion)
+    public function update(Request $request, $id)
     {
-        //
+        $datosActividad = request()->except(['_token','_method']);
+        ActividadAccion::where('id','=',$id)->update($datosActividad);
+        return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');
     }
 
     /**
@@ -78,8 +101,9 @@ class ActividadAccionController extends Controller
      * @param  \App\Models\ActividadAccion  $actividadAccion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ActividadAccion $actividadAccion)
+    public function destroy($id)
     {
-        //
+        ActividadAccion::destroy($id);
+        return redirect()->back()->with('mensaje','Actividad de mejora eliminada');;
     }
 }

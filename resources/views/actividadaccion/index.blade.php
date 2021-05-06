@@ -14,10 +14,13 @@
     <thead class="thead-light">
         <tr>
             <th>Id</th>
+            <th>IdAccion</th>
             <th>Nombre</th>
-            <th>Resultado</th>
+            <th>Inicio</th>
+            <th>Fin</th>
             <th>Duracion</th>
-            <th>Avance</th>
+            <th>Estado</th>
+            <th>Archivo</th>
             <th>Ver</th>
             <th></th>
         </tr>
@@ -28,11 +31,11 @@
             <td>{{ $actividad->id }}</td>
             <td>{{ $actividad->idAccion }}</td>
             <td>{{ $actividad->nombre }}</td>
-            <td>{{ $actividad->descripcion }}</td>
-            <td>{{ $actividad->resultado }}</td>
+            <td>{{ $actividad->fechaInicio }}</td>
+            <td>{{ $actividad->fechaFin }}</td>
             <td>{{ $actividad->duracion }}</td>
-            <td>{{ $actividad->avance }}</td>
-
+            <td>{{ $actividad->estado }}</td>
+            <td>{{ $actividad->archivo }}</td>
             <td>
                 <a href="{{ url('/actividades/'.$actividad->id.'/edit') }}" title="Ver actividad"><i class="fas fa-clipboard-list" style="color:#117a8b;font-size:20px;"></i></a>
             </td>

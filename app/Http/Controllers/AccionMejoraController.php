@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\AccionMejora;
 use App\Models\ActividadAccion;
+use App\Models\User;
+use App\Models\encargado_accion;
+
+use App\Models\estandar;
+use App\Models\estandar_accion;
+
 use Illuminate\Http\Request;
 
 class AccionMejoraController extends Controller
@@ -16,6 +22,7 @@ class AccionMejoraController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**
@@ -25,7 +32,8 @@ class AccionMejoraController extends Controller
      */
     public function create($idPlan)
     {
-        return view('accionmejora.create',['idPlan'=>$idPlan]);
+        $users = User::all();
+        return view('accionmejora.create',['idPlan'=>$idPlan],compact(['users']));
     }
 
     /**
@@ -50,17 +58,17 @@ class AccionMejoraController extends Controller
             'responsable' => 'required|integer',
             'estado' => 'required|string|max:255',
             'avance' => 'required|string|max:255',
-            'indicador' => 'required|string|max:255'
+            'indicador' => 'required|string|max:255',
+            'prioridad' => 'required|string|max:255'
         ];
         $mensaje = [
             'required'=>'El :attribute es requerido',
             "descripcion.required"=>'La descripcion es requerida'
         ];
         $this->validate($request,$campos,$mensaje);
-
         $datosAccion = request()->except('_token');
         AccionMejora::insert($datosAccion);
-        return redirect("planes")->with('mensaje','Acción de mejora creada');
+        return redirect('planes/' . $datosAccion['idPlan'] . '/edit')->with('mensaje','Acción de mejora creada');
     }
 
     /**
@@ -83,8 +91,15 @@ class AccionMejoraController extends Controller
     public function edit($id)
     {
         $accion = AccionMejora::findOrFail($id);
-        $actividad = ActividadAccion::where('idAccion','=',$accion->id)->paginate(10);
-        return view('accionmejora.edit',compact(['accion','actividad']));
+        $actividades = ActividadAccion::where('idAccion','=',$accion->id)->paginate(10);
+        $users = User::all();
+        $encargados = encargado_accion::where('idAccion','=',$accion->id)->get();
+
+        
+        $estandares = estandar::all();
+        $estandares_accion = estandar_accion::where('idAccion','=',$accion->id)->get();
+
+        return view('accionmejora.edit',compact(['accion','actividades','users','encargados','estandares','estandares_accion']));
     }
 
     /**
@@ -96,9 +111,30 @@ class AccionMejoraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosAccion = request()->except(['_token','_method']);
+        $datosAccion = request()->except(['_token','_method','encargados','estandares']);
         AccionMejora::where('id','=',$id)->update($datosAccion);
-        return redirect('planes')->with('mensaje','Accion de mejora modificada');
+
+        $encargados = $request->input('encargados');
+        encargado_accion::where('idAccion',$id)->delete();
+        for ($i=0; $i < count($encargados); $i++) {
+            $datoEncargado[] = [
+                'idAccion'  => $id,
+                'idUsuario' => $encargados[$i]
+            ];
+            encargado_accion::insert($datoEncargado);
+        }
+
+        $estandares = $request->input('estandares');
+        estandar_accion::where('idAccion',$id)->delete();
+        for ($i=0; $i < count($estandares); $i++) {
+            $datoEstandares[] = [
+                'idAccion'  => $id,
+                'idEstandar' => $estandares[$i]
+            ];
+            estandar_accion::insert($datoEstandares);
+        }
+
+        return redirect('planes/' . $datosAccion['idPlan'] . '/edit')->with('mensaje','Accion de mejora modificada');
     }
 
     /**
@@ -110,6 +146,6 @@ class AccionMejoraController extends Controller
     public function destroy($id)
     {
         AccionMejora::destroy($id);
-        return redirect('planes')->with('mensaje','Accion de mejora eliminada');;
+        return redirect()->back()->with('mensaje','Accion de mejora eliminada');
     }
 }

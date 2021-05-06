@@ -23,10 +23,12 @@ Route::group(['middleware'=>'auth'],function(){
 /* ROUTES APP  */
 Route::resource('usuarios', UsuarioController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('planes', PlanMejoraController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+
 Route::get('acciones/create/{idPlan}',[AccionMejoraController::class, 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('acciones', AccionMejoraController::class, ['except' => 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 
-Route::resource('actividades', ActividadAccionController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+Route::get('actividades/create/{idAccion}',[ActividadAccionController::class, 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+Route::resource('actividades', ActividadAccionController::class, ['except' => 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 
 /* ROUTES PARA EL LOGIN CON GOOGLE  */
 Route::get('auth/google',[GoogleController::class,'redirectToGoogle']);
