@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-group">
-            <label for="valor">Valor</label>
+            <label for="valor">Valor (%)</label>
             <input class="form-control" type="number" name="valor" id="valor" value="{{ isset($accion->valor)?$accion->valor:old('valor') }}" placeholder="Valor">
         </div>
 
@@ -31,8 +31,8 @@
             <input class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($accion->fechaFin)?$accion->fechaFin:old('fechaFin') }}">
         </div>
 
-        <div class="form-group">
-            <label for="duracion">Duración</label>
+        <div class="form-group" hidden>
+            <label for="duracion">Duración (CALCULADO)</label>
             <input class="form-control" type="number" name="duracion" id="duracion" value="{{ isset($accion->duracion)?$accion->duracion:old('duracion') }}" placeholder="Duracion">
         </div>
 
@@ -43,7 +43,13 @@
 
         <div class="form-group">
             <label for="indicador">Indicador</label>
-            <input class="form-control" type="text" name="indicador" id="indicador" value="{{ isset($accion->indicador)?$accion->indicador:old('indicador') }}" placeholder="indicador">
+            <select class="form-control" name="indicador" id="indicador">
+                @if(isset($indicadores))
+                @foreach( $indicadores as $indi )
+                <option value="{{ $indi->id }}" {{ isset($accion->indicador)? ($accion->indicador==$indi->id ? 'selected':'') : '' }} >{{ $indi->codigo.' - '.$indi->detalle }}</option>                
+                @endforeach
+                @endif
+            </select>
         </div>
     </div>
     <div class="col-6 p-2">
@@ -71,25 +77,35 @@
 
         <div class="form-group">
             <label for="estado">Estado</label>
-            <input class="form-control" type="text" name="estado" id="estado" value="{{ isset($accion->estado)?$accion->estado:old('estado') }}" placeholder="Estado">
+            <select class="form-control" name="estado" id="estado" value="{{ isset($accion->estado)?$accion->estado:old('estado') }}">
+                <option value="Iniciado" {{ isset($accion->estado)? ($accion->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
+                <option value="Finalizado" {{ isset($accion->estado)? ($accion->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
+                <option value="Cancelado" {{ isset($accion->estado)? ($accion->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label for="avance">Avance</label>
             <input class="form-control" type="text" name="avance" id="avance" value="{{ isset($accion->avance)?$accion->avance:old('avance') }}" placeholder="Avance">
         </div>
-
-        <div class="form-group">
-            <label for="resultado">Resultado</label>
-            <input class="form-control" type="number" name="resultado" id="resultado" value="{{ isset($accion->resultado)?$accion->resultado:old('resultado') }}" placeholder="Resultado">
-        </div>
-
+        
         <div class="form-group">
             <label for="prioridad">Prioridad</label>
             <select class="form-control" name="prioridad" id="prioridad" value="{{ isset($accion->prioridad)?$accion->prioridad:old('prioridad') }}">
                 <option value="Alta" {{ isset($accion->prioridad)? ($accion->prioridad=='Alta' ? 'selected':'') : '' }}>Alta</option>
                 <option value="Media" {{ isset($accion->prioridad)? ($accion->prioridad=='Media' ? 'selected':'') :'' }}>Media</option>
                 <option value="Baja" {{ isset($accion->prioridad)? ($accion->prioridad=='Baja' ? 'selected':'') :'' }}>Baja</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="resultado">Resultado</label>
+            <select class="form-control" name="resultado" id="resultado">
+                @if(isset($resultados))
+                @foreach( $resultados as $res )
+                <option value="{{ $res->id }}" {{ isset($accion->resultado)? ($accion->resultado==$res->id ? 'selected':'') : '' }} >{{ $res->codigo.' - '.$res->detalle }}</option>                
+                @endforeach
+                @endif
             </select>
         </div>
     </div>

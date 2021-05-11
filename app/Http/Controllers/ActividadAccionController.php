@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\ActividadAccion;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class ActividadAccionController extends Controller
             'descripcion' => 'required|string|max:255',
             'fechaInicio' => 'required|date|max:255',
             'fechaFin' => 'required|date|max:255',
-            'duracion' => 'required|integer',
+            //'duracion' => 'required|integer',
             'estado' => 'required|string|max:255',
             //'archivo' => 'required|string|max:255'
         ];
@@ -50,12 +51,25 @@ class ActividadAccionController extends Controller
             "descripcion.required"=>'La descripcion es requerida'
         ];
         $this->validate($request,$campos,$mensaje);
-        $datosAccion = request()->except('_token');
+        $datosActividad = request()->except('_token');
         if($request->hasFile('archivo')){
-            $datosAccion['archivo'] = $request->file('archivo')->store('uploads','public');
-        } else { $datosAccion['archivo'] = 'FALTA ARCHIVO'; }
-        ActividadAccion::insert($datosAccion);
-        return redirect('acciones/' . $datosAccion['idAccion'] . '/edit')->with('mensaje','Actividad de mejora creada');
+            $datosActividad['archivo'] = $request->file('archivo')->store('uploads','public');
+        } else { $datosActividad['archivo'] = 'FALTA ARCHIVO'; }
+        
+        $fdate = $request->fechaInicio;
+        $tdate = $request->fechaFin;
+        $datetime1 = new DateTime($fdate);
+        $datetime2 = new DateTime($tdate);
+        $interval = $datetime1->diff($datetime2);
+        $daysDiff = $interval->format('%a');//now do whatever you like with $days
+        $semanas = floor($daysDiff / 7);
+        $days = floor($daysDiff % 7);
+        $duracion = $semanas.' semana(s)';
+        if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
+        $datosActividad['duracion']= $duracion;
+
+        ActividadAccion::insert($datosActividad);
+        return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad de mejora creada');
     }
 
     /**
@@ -91,6 +105,19 @@ class ActividadAccionController extends Controller
     public function update(Request $request, $id)
     {
         $datosActividad = request()->except(['_token','_method']);
+        
+        $fdate = $request->fechaInicio;
+        $tdate = $request->fechaFin;
+        $datetime1 = new DateTime($fdate);
+        $datetime2 = new DateTime($tdate);
+        $interval = $datetime1->diff($datetime2);
+        $daysDiff = $interval->format('%a');//now do whatever you like with $days
+        $semanas = floor($daysDiff / 7);
+        $days = floor($daysDiff % 7);
+        $duracion = $semanas.' semana(s)';
+        if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
+        $datosActividad['duracion']= $duracion;
+
         ActividadAccion::where('id','=',$id)->update($datosActividad);
         return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');
     }

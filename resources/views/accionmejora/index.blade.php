@@ -13,9 +13,7 @@
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
-            <th>Id</th>
             <th>Nombre</th>
-            <th>Resultado</th>
             <th>Duracion</th>
             <th>Avance</th>
             <th>Ver</th>
@@ -25,9 +23,7 @@
     <tbody>
         @foreach( $acciones as $accion )
         <tr>
-            <td>{{ $accion->id }}</td>
             <td>{{ $accion->nombre }}</td>
-            <td>{{ $accion->resultado }}</td>
             <td>{{ $accion->duracion }}</td>
             <td>{{ $accion->avance }}</td>
             <td>

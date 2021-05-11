@@ -31,15 +31,19 @@
             <input class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($actividad->fechaFin)?$actividad->fechaFin:old('fechaFin') }}">
         </div>
 
-        <div class="form-group">
-            <label for="duracion">Duración</label>
+        <div class="form-group" hidden>
+            <label for="duracion">Duración (CALCULADO)</label>
             <input class="form-control" type="number" name="duracion" id="duracion" value="{{ isset($actividad->duracion)?$actividad->duracion:old('duracion') }}" placeholder="Duracion">
         </div>
     </div>
     <div class="col-6 p-2">
         <div class="form-group">
             <label for="estado">Estado</label>
-            <input class="form-control" type="text" name="estado" id="estado" value="{{ isset($actividad->estado)?$actividad->estado:old('estado') }}" placeholder="Estado">
+            <select class="form-control" name="estado" id="estado" value="{{ isset($actividad->estado)?$actividad->estado:old('estado') }}">
+                <option value="Iniciado" {{ isset($actividad->estado)? ($actividad->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
+                <option value="Finalizado" {{ isset($actividad->estado)? ($actividad->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
+                <option value="Cancelado" {{ isset($actividad->estado)? ($actividad->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="archivo">Archivo</label>

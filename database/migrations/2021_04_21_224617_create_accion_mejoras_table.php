@@ -21,7 +21,7 @@ class CreateAccionMejorasTable extends Migration
             $table->integer('valor');
             $table->date('fechaInicio');
             $table->date('fechaFin');
-            $table->integer('duracion');
+            $table->string('duracion');
             $table->string('semestreEjecucion');
             $table->string('recursos');
             $table->string('metas');

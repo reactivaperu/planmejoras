@@ -34,7 +34,7 @@
             <td>{{ $plan->codigo }}</td>
             <td>{{ $plan->nombre }}</td>
             <td>{{ $plan->anio }}</td>
-            <td>{{ $plan->creador }}</td>
+            <td>{{ $plan->name }}</td>
             <td>{{ $plan->avance }}</td>
             <td>{{ $plan->estado }}</td>
             <td class="text-center">

@@ -8,7 +8,7 @@
         {{ method_field('PATCH') }}
         @include('actividadaccion.form')
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             <label for="idAccion">Accion</label>
             <input class="form-control" type="text" name="idAccion" id="idAccion" value="{{ isset($actividad->idAccion)?$actividad->idAccion:old('idAccion') }}" placeholder="Accion">
         </div>

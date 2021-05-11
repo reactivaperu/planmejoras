@@ -13,8 +13,6 @@
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
-            <th>Id</th>
-            <th>IdAccion</th>
             <th>Nombre</th>
             <th>Inicio</th>
             <th>Fin</th>
@@ -28,14 +26,16 @@
     <tbody>
         @foreach( $actividades as $actividad )
         <tr>
-            <td>{{ $actividad->id }}</td>
-            <td>{{ $actividad->idAccion }}</td>
             <td>{{ $actividad->nombre }}</td>
             <td>{{ $actividad->fechaInicio }}</td>
             <td>{{ $actividad->fechaFin }}</td>
             <td>{{ $actividad->duracion }}</td>
             <td>{{ $actividad->estado }}</td>
-            <td>{{ $actividad->archivo }}</td>
+            <td>            
+                <img src="{{url('/img/pdf.svg')}}" alt="Archivo PDF" class="img-fluid" width="30" height="30">
+                <br/>
+                <a href="{{ asset('storage/'.$actividad->archivo) }}" download="archivoActividad-{{isset($actividad->idAccion)?$actividad->idAccion:old('idAccion')}}.pdf"> Descargar </a>
+            </td>
             <td>
                 <a href="{{ url('/actividades/'.$actividad->id.'/edit') }}" title="Ver actividad"><i class="fas fa-clipboard-list" style="color:#117a8b;font-size:20px;"></i></a>
             </td>

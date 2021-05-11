@@ -7,7 +7,7 @@
         @csrf
         @include('actividadaccion.form')
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             <label for="idAccion">Accion</label>
             <input class="form-control" type="text" name="idAccion" id="idAccion" value="{{ isset($idAccion)?$idAccion:old('idAccion') }}" placeholder="Plan">
         </div>

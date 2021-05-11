@@ -24,17 +24,21 @@
     <input class="form-control" type="number" name="anio" id="anio" value="{{ isset($plan->anio)?$plan->anio:old('anio') }}" placeholder="Año">
 </div>
 
-<div class="form-group">
+<div class="form-group" hidden>
     <label for="creador">Creador</label>
-    <input class="form-control" type="number" name="creador" id="creador" value="{{ isset($plan->creador)?$plan->creador:old('creador') }}" placeholder="Creador">
+    <input class="form-control" type="number" name="creador" id="creador" value="{{ isset($plan->creador)?$plan->creador:auth()->user()->id }}" placeholder="Creador">
 </div>
 
 <div class="form-group">
-    <label for="avance">Avance</label>
+    <label for="avance">Avance (%)</label>
     <input class="form-control" type="number" name="avance" id="avance" value="{{ isset($plan->avance)?$plan->avance:old('avance') }}" placeholder="Avance">
 </div>
 
 <div class="form-group">
     <label for="estado">Estado</label>
-    <input class="form-control" type="text" name="estado" id="estado" value="{{ isset($plan->estado)?$plan->estado:old('estado') }}" placeholder="Estado">
+    <select class="form-control" name="estado" id="estado" value="{{ isset($plan->estado)?$plan->estado:old('estado') }}">
+        <option value="Iniciado" {{ isset($plan->estado)? ($plan->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
+        <option value="Finalizado" {{ isset($plan->estado)? ($plan->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
+        <option value="Cancelado" {{ isset($plan->estado)? ($plan->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>
+    </select>
 </div>

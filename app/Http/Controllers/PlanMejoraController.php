@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PlanMejora;
 use App\Models\AccionMejora;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlanMejoraController extends Controller
 {
@@ -15,7 +16,8 @@ class PlanMejoraController extends Controller
      */
     public function index()
     {
-        $datos['plan_mejoras'] = PlanMejora::paginate(10);
+        $datos['plan_mejoras'] = DB::table('plan_mejoras')->join('users','plan_mejoras.creador','=','users.id')->select('plan_mejoras.*','users.name')->paginate(10);
+        //return response()->json($datos);
         return view('planmejora.index', $datos);
     }
 

@@ -20,7 +20,7 @@ class CreateActividadAccionsTable extends Migration
             $table->string('descripcion');
             $table->date('fechaInicio');
             $table->date('fechaFin');
-            $table->integer('duracion');
+            $table->string('duracion');
             $table->string('estado');
             $table->string('archivo');
             $table->timestamps();
