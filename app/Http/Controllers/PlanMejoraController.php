@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PlanMejora;
 use App\Models\AccionMejora;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +29,8 @@ class PlanMejoraController extends Controller
      */
     public function create()
     {
-        return view('planmejora.create');
+        $users = User::all();
+        return view('planmejora.create',compact(['users']));
     }
 
     /**
@@ -55,7 +57,7 @@ class PlanMejoraController extends Controller
 
         $datosPlan = request()->except('_token');
         PlanMejora::insert($datosPlan);
-        return redirect('planes')->with('mensaje','Plan de mejora creado creado');
+        return redirect('planes')->with('mensaje','Plan de mejora creado');
     }
 
     /**
@@ -77,9 +79,10 @@ class PlanMejoraController extends Controller
      */
     public function edit($id)
     {        
+        $users = User::all();
         $plan = PlanMejora::findOrFail($id);
         $acciones = AccionMejora::where('idPlan','=',$plan->id)->paginate(10);
-        return view('planmejora.edit',compact(['plan','acciones']));
+        return view('planmejora.edit',compact(['plan','acciones','users']));
     }
 
     /**

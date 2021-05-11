@@ -30,6 +30,17 @@
 </div>
 
 <div class="form-group">
+    <label for="creador">Creador</label>
+    <select class="form-control" name="creador" id="creador">
+        @if(isset($users))
+        @foreach( $users as $user )
+        <option value="{{ $user->id }}" {{ isset($plan->creador)? ($plan->creador==$user->id ? 'selected':'') : '' }} >{{ $user->name }}</option>                
+        @endforeach
+        @endif
+    </select>
+</div>
+
+<div class="form-group">
     <label for="avance">Avance (%)</label>
     <input class="form-control" type="number" name="avance" id="avance" value="{{ isset($plan->avance)?$plan->avance:old('avance') }}" placeholder="Avance">
 </div>

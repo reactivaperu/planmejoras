@@ -7,7 +7,9 @@ use App\Models\AccionMejora;
 use App\Models\ActividadAccion;
 use App\Models\User;
 use App\Models\Resultado;
+use App\Models\resultado_accion;
 use App\Models\Indicador;
+use App\Models\indicador_accion;
 use App\Models\encargado_accion;
 
 use App\Models\estandar;
@@ -52,7 +54,7 @@ class AccionMejoraController extends Controller
         $campos = [
             'idPlan' => 'required|integer',
             'nombre' => 'required|string|max:255',
-            'resultado' => 'required|integer',
+            //'resultado' => 'required|integer',
             'valor' => 'required|integer',
             'fechaInicio' => 'required|date|max:255',
             'fechaFin' => 'required|date|max:255',
@@ -60,10 +62,10 @@ class AccionMejoraController extends Controller
             'semestreEjecucion' => 'required|string|max:255',
             'recursos' => 'required|string|max:255',
             'metas' => 'required|string|max:255',
-            'responsable' => 'required|integer',
+            //'responsable' => 'required|integer',
             'estado' => 'required|string|max:255',
             'avance' => 'required|string|max:255',
-            'indicador' => 'required|string|max:255',
+            //'indicador' => 'required|string|max:255',
             'prioridad' => 'required|string|max:255'
         ];
         $mensaje = [
@@ -113,11 +115,16 @@ class AccionMejoraController extends Controller
         $users = User::all();
         $encargados = encargado_accion::where('idAccion','=',$accion->id)->get();
         $estandares = estandar::all();
-        $resultados = Resultado::all();
-        $indicadores = Indicador::all();
         $estandares_accion = estandar_accion::where('idAccion','=',$accion->id)->get();
 
-        return view('accionmejora.edit',compact(['accion','actividades','users','encargados','estandares','estandares_accion','resultados','indicadores']));
+        $resultados = Resultado::all();
+        $resultados_accion = resultado_accion::where('idAccion','=',$accion->id)->get();
+        
+        $indicadores = Indicador::all();
+        $indicadores_accion = indicador_accion::where('idAccion','=',$accion->id)->get();
+
+        return view('accionmejora.edit',compact(['accion','actividades','users','encargados',
+        'estandares','estandares_accion','resultados','indicadores','resultados_accion','indicadores_accion']));
     }
 
     /**
@@ -129,7 +136,7 @@ class AccionMejoraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosAccion = request()->except(['_token','_method','encargados','estandares']);
+        $datosAccion = request()->except(['_token','_method','encargados','estandares','resultados','indicadores']);
         
         $fdate = $request->fechaInicio;
         $tdate = $request->fechaFin;
@@ -166,6 +173,30 @@ class AccionMejoraController extends Controller
                     'idEstandar' => $estandares[$i]
                 ];
                 estandar_accion::insert($datoEstandares);
+            }
+        }
+
+        $resultados = $request->input('resultados');
+        if($resultados){
+            resultado_accion::where('idAccion',$id)->delete();
+            for ($i=0; $i < count($resultados); $i++) {
+                $datoResultados[] = [
+                    'idAccion'  => $id,
+                    'idResultado' => $resultados[$i]
+                ];
+                resultado_accion::insert($datoResultados);
+            }
+        }
+
+        $indicadores = $request->input('indicadores');
+        if($indicadores){
+            indicador_accion::where('idAccion',$id)->delete();
+            for ($i=0; $i < count($indicadores); $i++) {
+                $datoIndicadores[] = [
+                    'idAccion'  => $id,
+                    'idIndicador' => $indicadores[$i]
+                ];
+                indicador_accion::insert($datoIndicadores);
             }
         }
 

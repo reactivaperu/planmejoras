@@ -17,7 +17,7 @@ class CreateAccionMejorasTable extends Migration
             $table->id();
             $table->integer('idPlan');
             $table->string('nombre');
-            $table->integer('resultado');
+            //$table->integer('resultado');
             $table->integer('valor');
             $table->date('fechaInicio');
             $table->date('fechaFin');
@@ -28,7 +28,7 @@ class CreateAccionMejorasTable extends Migration
             $table->integer('responsable');
             $table->string('estado');
             $table->string('avance');
-            $table->string('indicador');
+            //$table->string('indicador');
             $table->string('prioridad');
             $table->timestamps();
         });

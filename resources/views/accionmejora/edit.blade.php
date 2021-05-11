@@ -7,7 +7,7 @@
         @csrf
         {{ method_field('PATCH') }}
         @include('accionmejora.form')
-
+        
         <div class="form-group w-100">
             <label for="encargados">Encargados</label>
             <select class="form-control w-100" name="encargados[]" id="encargados" multiple="multiple">
@@ -27,6 +27,8 @@
             </select>
         </div>
 
+        <hr>
+
         <div class="form-group w-100">
             <label for="estandares">Estandares</label>
             <select class="form-control w-100" name="estandares[]" id="estandares" multiple="multiple">
@@ -45,7 +47,45 @@
                 @endif
             </select>
         </div>
-        
+
+        <div class="form-group">
+            <label for="resultado">Resultados</label>
+            <select class="form-control" name="resultados[]" id="resultados" multiple="multiple">
+                @if(isset($resultados))
+                @foreach( $resultados as $resultado )
+                <option value="{{ $resultado->id }}" 
+                @if(isset($resultados_accion))
+                @foreach( $resultados_accion as $resultadoaccion )
+                    @if($resultadoaccion->idResultado == $resultado->id)
+                    selected
+                    @endif
+                @endforeach
+                @endif
+                >{{ $resultado->codigo.' - '.$resultado->detalle }}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="indicadores">Indicadores</label>
+            <select class="form-control" name="indicadores[]" id="indicadores" multiple="multiple">
+                @if(isset($indicadores))
+                @foreach( $indicadores as $indicador )
+                <option value="{{ $indicador->id }}" 
+                @if(isset($indicadores_accion))
+                @foreach( $indicadores_accion as $indicadoraccion )
+                    @if($indicadoraccion->idIndicador == $indicador->id)
+                    selected
+                    @endif
+                @endforeach
+                @endif
+                >{{ $indicador->codigo.' - '.$indicador->detalle }}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+    
         <div class="form-group" hidden>
             <label for="idPlan">Plan</label>
             <input class="form-control" type="text" name="idPlan" id="idPlan" value="{{ isset($accion->idPlan)?$accion->idPlan:old('idPlan') }}" placeholder="Plan">

@@ -35,7 +35,7 @@
             <td>{{ $plan->nombre }}</td>
             <td>{{ $plan->anio }}</td>
             <td>{{ $plan->name }}</td>
-            <td>{{ $plan->avance }}</td>
+            <td>{{ $plan->avance }}%</td>
             <td>{{ $plan->estado }}</td>
             <td class="text-center">
                 <a href="{{ url('/planes/'.$plan->id.'/edit') }}" title="Ver plan"><i class="fas fa-search" style="color:#117a8b;font-size:20px;"></i></a>
