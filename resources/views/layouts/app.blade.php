@@ -38,7 +38,16 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="{{Request::is('planes')?'active':''}} nav-item">
-                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Planes') }}</a>
+                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Planes de Mejora') }}</a>
+                        </li>
+                        <li class="{{Request::is('planes')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('acciones/asignado') }}">{{ __('Acciones Asignadas') }}</a>
+                        </li>
+                        <li class="{{Request::is('planes')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Busqueda') }}</a>
+                        </li>
+                        <li class="{{Request::is('planes')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Reportes') }}</a>
                         </li>
                         <li class="{{Request::is('usuarios')?'active':''}} nav-item">
                             <a class="nav-link" href="{{ url('usuarios') }}">{{ __('Usuarios') }}</a>

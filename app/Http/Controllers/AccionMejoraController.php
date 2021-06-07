@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Auth;
 use App\Models\AccionMejora;
 use App\Models\ActividadAccion;
 use App\Models\User;
@@ -99,7 +100,9 @@ class AccionMejoraController extends Controller
      */
     public function show(AccionMejora $accionMejora)
     {
-        //
+        $userId = auth()->user()->id;
+        $acciones = AccionMejora::where('responsable','=',$userId)->paginate(10);
+        return view('accionmejora.asignado',compact(['acciones','userId']));
     }
 
     /**

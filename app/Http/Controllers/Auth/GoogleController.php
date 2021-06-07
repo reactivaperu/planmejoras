@@ -29,9 +29,9 @@ class GoogleController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
-            if(explode("@", $user->email)[1] !== 'uandina.edu.pe'){
-                return redirect('/')->withErrors(['Ingrese con una cuenta coorporativa']);
-            }
+            //if(explode("@", $user->email)[1] !== 'uandina.edu.pe'){
+            //    return redirect('/')->withErrors(['Ingrese con una cuenta coorporativa']);
+            //}
             $finduser = User::where('google_id', $user->id)->first();
             if($finduser){
                 Auth::login($finduser);

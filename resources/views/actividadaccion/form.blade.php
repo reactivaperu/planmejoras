@@ -45,17 +45,5 @@
                 <option value="Cancelado" {{ isset($actividad->estado)? ($actividad->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="archivo">Archivo</label>
-            <br/>
-            @if(isset($actividad->archivo))
-            <img src="{{url('/img/pdf.svg')}}" alt="Archivo PDF" class="img-fluid" width="120" height="120">
-            <br/>
-            <a href="{{ asset('storage/'.$actividad->archivo) }}" download="archivoActividad-{{isset($actividad->idAccion)?$actividad->idAccion:old('idAccion')}}.pdf"> Descargar </a>
-            @else
-            <br/>
-            <input type="file" name="archivo" id="archivo">
-            @endif
-        </div>
     </div>
 </div>

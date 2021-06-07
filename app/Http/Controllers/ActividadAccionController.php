@@ -13,9 +13,10 @@ class ActividadAccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public static function index($idAccion)
     {
-        //
+        $datos['actividades'] = ActividadAccion::where('idAccion','=',$idAccion)->paginate();
+        return view('actividadaccion.lista',$datos);
     }
 
     /**
@@ -105,21 +106,25 @@ class ActividadAccionController extends Controller
     public function update(Request $request, $id)
     {
         $datosActividad = request()->except(['_token','_method']);
-        
-        $fdate = $request->fechaInicio;
-        $tdate = $request->fechaFin;
-        $datetime1 = new DateTime($fdate);
-        $datetime2 = new DateTime($tdate);
-        $interval = $datetime1->diff($datetime2);
-        $daysDiff = $interval->format('%a');//now do whatever you like with $days
-        $semanas = floor($daysDiff / 7);
-        $days = floor($daysDiff % 7);
-        $duracion = $semanas.' semana(s)';
-        if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
-        $datosActividad['duracion']= $duracion;
-
-        ActividadAccion::where('id','=',$id)->update($datosActividad);
-        return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');
+        if($request->hasFile('archivo')){
+            $datosActividad['archivo'] = $request->file('archivo')->store('uploads','public');
+            ActividadAccion::where('id','=',$id)->update($datosActividad);
+            return redirect('/acciones/asignado')->with('mensaje','Archivo subido!');   
+        } else { 
+            $fdate = $request->fechaInicio;
+            $tdate = $request->fechaFin;
+            $datetime1 = new DateTime($fdate);
+            $datetime2 = new DateTime($tdate);
+            $interval = $datetime1->diff($datetime2);
+            $daysDiff = $interval->format('%a');//now do whatever you like with $days
+            $semanas = floor($daysDiff / 7);
+            $days = floor($daysDiff % 7);
+            $duracion = $semanas.' semana(s)';
+            if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
+            $datosActividad['duracion']= $duracion;
+            ActividadAccion::where('id','=',$id)->update($datosActividad);
+            return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');   
+        }
     }
 
     /**

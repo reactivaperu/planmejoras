@@ -31,11 +31,15 @@
             <td>{{ $actividad->fechaFin }}</td>
             <td>{{ $actividad->duracion }}</td>
             <td>{{ $actividad->estado }}</td>
-            <td>            
-                <img src="{{url('/img/pdf.svg')}}" alt="Archivo PDF" class="img-fluid" width="30" height="30">
-                <br/>
-                <a href="{{ asset('storage/'.$actividad->archivo) }}" download="archivoActividad-{{isset($actividad->idAccion)?$actividad->idAccion:old('idAccion')}}.pdf"> Descargar </a>
+            @if ($actividad->archivo  === "FALTA ARCHIVO")
+            <td class="text-center">{{ $actividad->archivo }}</td>
+            @else
+            <td class="text-center m-0 p-0">
+                <a href="{{ asset('storage/'.$actividad->archivo) }}" class="p-0 m-0" download="archivoActividad-{{isset($actividad->idAccion)?$actividad->idAccion:old('idAccion')}}.pdf">
+                    <img src="{{url('/img/pdf.svg')}}" alt="Archivo PDF" class="img-fluid" width="30" height="30">
+                </a>
             </td>
+            @endif
             <td>
                 <a href="{{ url('/actividades/'.$actividad->id.'/edit') }}" title="Ver actividad"><i class="fas fa-clipboard-list" style="color:#117a8b;font-size:20px;"></i></a>
             </td>

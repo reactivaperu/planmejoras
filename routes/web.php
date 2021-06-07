@@ -25,7 +25,9 @@ Route::resource('usuarios', UsuarioController::class)->middleware('auth'); // MI
 Route::resource('planes', PlanMejoraController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 
 Route::get('acciones/create/{idPlan}',[AccionMejoraController::class, 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+Route::get('acciones/asignado',[AccionMejoraController::class, 'show'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('acciones', AccionMejoraController::class, ['except' => 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+
 
 Route::get('actividades/create/{idAccion}',[ActividadAccionController::class, 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('actividades', ActividadAccionController::class, ['except' => 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN

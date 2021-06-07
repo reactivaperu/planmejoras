@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\encargado_accion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EncargadoAccionController extends Controller
 {
@@ -12,9 +13,11 @@ class EncargadoAccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public static function index($idAccion)
     {
         //
+        $datos['encargados'] = DB::table('encargado_accions')->join('users','encargado_accions.idUsuario','=','users.id')->where('encargado_accions.idAccion','=',$idAccion)->select('users.name')->paginate();
+        return view('usuario.encargados',$datos);
     }
 
     /**
