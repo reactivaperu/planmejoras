@@ -164,7 +164,28 @@ class AccionMejoraController extends Controller
                     'idUsuario' => $encargados[$i]
                 ];
                 encargado_accion::insert($datoEncargado);
+            } 
+            /* 
+            $encargados = array_unique($encargados);
+            $encargados_uni = [];
+            for ($i=0; $i < count($encargados); $i++) {
+                $noexiste = true;
+                for ($j=0; $j < count($encargados_uni); $j++) { 
+                    if($encargados[$i] !== $encargados_uni[$j]){
+                        $noexiste = false;
+                    }
+                }
+                if($noexiste){
+                    array_push($encargados_uni, $encargados[$i]);      
+                }
             }
+            for ($i=0; $i < count($encargados_uni); $i++) {
+                $datoEncargado[] = [
+                    'idAccion'  => $id,
+                    'idUsuario' => $encargados_uni[$i]
+                ];
+                encargado_accion::insert($datoEncargado);
+            } */
         }
 
         $estandares = $request->input('estandares');

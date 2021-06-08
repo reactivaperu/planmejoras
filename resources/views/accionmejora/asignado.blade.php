@@ -5,7 +5,6 @@
 @section('content')
 <div class="container">
     <h1>Acciones de mejora asigandos</h1>
-    USUARIO {{ $userId }} - {{ Auth::user()->name }}
     <br/>
     <table class="table table-light">
         <thead class="thead-light">

@@ -40,19 +40,23 @@
                         <li class="{{Request::is('planes')?'active':''}} nav-item">
                             <a class="nav-link" href="{{ url('planes') }}">{{ __('Planes de Mejora') }}</a>
                         </li>
-                        <li class="{{Request::is('planes')?'active':''}} nav-item">
+                        @if(Auth::user()->tipo !== 'Invitado')
+                        <li class="{{Request::is('acciones/asignado')?'active':''}} nav-item">
                             <a class="nav-link" href="{{ url('acciones/asignado') }}">{{ __('Acciones Asignadas') }}</a>
                         </li>
-                        <li class="{{Request::is('planes')?'active':''}} nav-item">
-                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Busqueda') }}</a>
+                        @endif
+                        <li class="{{Request::is('usuarios/search')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('usuarios/search?texto=&criterio=users.name') }}">{{ __('Busqueda') }}</a>
                         </li>
-                        <li class="{{Request::is('planes')?'active':''}} nav-item">
-                            <a class="nav-link" href="{{ url('planes') }}">{{ __('Reportes') }}</a>
+                        <li class="{{Request::is('reportes')?'active':''}} nav-item">
+                            <a class="nav-link" href="{{ url('reportes') }}">{{ __('Reportes') }}</a>
                         </li>
+                        @if(Auth::user()->tipo === 'Administrador')
                         <li class="{{Request::is('usuarios')?'active':''}} nav-item">
                             <a class="nav-link" href="{{ url('usuarios') }}">{{ __('Usuarios') }}</a>
                         </li>
-                        <li class="{{Request::is('roles')?'active':''}} nav-item">
+                        @endif
+                        <li class="{{Request::is('roles')?'active':''}} nav-item" hidden>
                             <a class="nav-link" href="{{ url('roles') }}">{{ __('Roles') }}</a>
                         </li>
                     </ul>

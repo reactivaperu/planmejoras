@@ -12,7 +12,10 @@
 @endif
 
 <h1>PLANES DE MEJORA</h1>
-<a href="{{ url('/planes/create') }}" class="btn btn-success">Registrar plan</a>
+
+@if(Auth::user()->tipo === 'Administrador')
+    <a href="{{ url('/planes/create') }}" class="btn btn-success">Registrar plan</a>
+@endif
 <br/>
 <br/>
 <table class="table table-light">
@@ -25,7 +28,9 @@
             <th>Avance</th>
             <th>Estado</th>
             <th>Ver plan</th>
+            @if(Auth::user()->tipo === 'Administrador')
             <th></th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -40,6 +45,7 @@
             <td class="text-center">
                 <a href="{{ url('/planes/'.$plan->id.'/edit') }}" title="Ver plan"><i class="fas fa-search" style="color:#117a8b;font-size:20px;"></i></a>
             </td>
+            @if(Auth::user()->tipo === 'Administrador')
             <td class="text-center">
                 <form method="post" action="{{ url( '/planes/'.$plan->id ) }}" class="d-inline">
                     @csrf
@@ -49,6 +55,7 @@
                     </button> 
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
     </tbody>

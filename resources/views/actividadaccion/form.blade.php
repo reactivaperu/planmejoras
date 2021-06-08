@@ -13,22 +13,22 @@
     <div class="col-6 p-2">
         <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($actividad->nombre)?$actividad->nombre:old('nombre') }}" placeholder="Nombre">
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($actividad->nombre)?$actividad->nombre:old('nombre') }}" placeholder="Nombre">
         </div>
 
         <div class="form-group">
             <label for="descripcion">Descripcion</label>
-            <input class="form-control" type="text" name="descripcion" id="descripcion" value="{{ isset($actividad->descripcion)?$actividad->descripcion:old('descripcion') }}" placeholder="Descripcion">
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="descripcion" id="descripcion" value="{{ isset($actividad->descripcion)?$actividad->descripcion:old('descripcion') }}" placeholder="Descripcion">
         </div>
 
         <div class="form-group">
             <label for="fechaInicio">Fecha de Inicio</label>
-            <input class="form-control" type="date" name="fechaInicio" id="fechaInicio" value="{{ isset($actividad->fechaInicio)?$actividad->fechaInicio:old('fechaInicio') }}">
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaInicio" id="fechaInicio" value="{{ isset($actividad->fechaInicio)?$actividad->fechaInicio:old('fechaInicio') }}">
         </div>
 
         <div class="form-group">
             <label for="fechaFin">Fecha de Fin</label>
-            <input class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($actividad->fechaFin)?$actividad->fechaFin:old('fechaFin') }}">
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($actividad->fechaFin)?$actividad->fechaFin:old('fechaFin') }}">
         </div>
 
         <div class="form-group" hidden>
@@ -39,7 +39,7 @@
     <div class="col-6 p-2">
         <div class="form-group">
             <label for="estado">Estado</label>
-            <select class="form-control" name="estado" id="estado" value="{{ isset($actividad->estado)?$actividad->estado:old('estado') }}">
+            <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="estado" id="estado" value="{{ isset($actividad->estado)?$actividad->estado:old('estado') }}">
                 <option value="Iniciado" {{ isset($actividad->estado)? ($actividad->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
                 <option value="Finalizado" {{ isset($actividad->estado)? ($actividad->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
                 <option value="Cancelado" {{ isset($actividad->estado)? ($actividad->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>

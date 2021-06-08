@@ -11,27 +11,27 @@
 
 <div class="form-group">
     <label for="codigo">Codigo</label>
-    <input class="form-control" type="text" name="codigo" id="codigo" value="{{ isset($plan->codigo)?$plan->codigo:old('codigo') }}" placeholder="Codigo">
+    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="codigo" id="codigo" value="{{ isset($plan->codigo)?$plan->codigo:old('codigo') }}" placeholder="Codigo">
 </div>
 
 <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($plan->nombre)?$plan->nombre:old('nombre') }}" placeholder="Nombre">
+    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($plan->nombre)?$plan->nombre:old('nombre') }}" placeholder="Nombre">
 </div>
 
 <div class="form-group">
     <label for="anio">Año</label>
-    <input class="form-control" type="number" name="anio" id="anio" value="{{ isset($plan->anio)?$plan->anio:old('anio') }}" placeholder="Año">
+    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="number" name="anio" id="anio" value="{{ isset($plan->anio)?$plan->anio:old('anio') }}" placeholder="Año">
 </div>
 
 <div class="form-group" hidden>
     <label for="creador">Creador</label>
-    <input class="form-control" type="number" name="creador" id="creador" value="{{ isset($plan->creador)?$plan->creador:auth()->user()->id }}" placeholder="Creador">
+    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="number" name="creador" id="creador" value="{{ isset($plan->creador)?$plan->creador:auth()->user()->id }}" placeholder="Creador">
 </div>
 
 <div class="form-group">
     <label for="creador">Creador</label>
-    <select class="form-control" name="creador" id="creador">
+    <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="creador" id="creador">
         @if(isset($users))
         @foreach( $users as $user )
         <option value="{{ $user->id }}" {{ isset($plan->creador)? ($plan->creador==$user->id ? 'selected':'') : '' }} >{{ $user->name }}</option>                
@@ -42,12 +42,12 @@
 
 <div class="form-group">
     <label for="avance">Avance (%)</label>
-    <input class="form-control" type="number" name="avance" id="avance" value="{{ isset($plan->avance)?$plan->avance:old('avance') }}" placeholder="Avance">
+    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="number" name="avance" id="avance" value="{{ isset($plan->avance)?$plan->avance:old('avance') }}" placeholder="Avance">
 </div>
 
 <div class="form-group">
     <label for="estado">Estado</label>
-    <select class="form-control" name="estado" id="estado" value="{{ isset($plan->estado)?$plan->estado:old('estado') }}">
+    <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="estado" id="estado" value="{{ isset($plan->estado)?$plan->estado:old('estado') }}">
         <option value="Iniciado" {{ isset($plan->estado)? ($plan->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
         <option value="Finalizado" {{ isset($plan->estado)? ($plan->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
         <option value="Cancelado" {{ isset($plan->estado)? ($plan->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>

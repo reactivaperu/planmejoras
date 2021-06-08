@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
@@ -99,5 +100,19 @@ class UsuarioController extends Controller
     {
         User::destroy($id);
         return redirect('usuarios');
+    }
+
+    public function search()
+    {
+        $texto = $_GET['texto'];
+        $criterio = $_GET['criterio'];
+        $datos['texto'] = $texto;
+        $datos['criterio'] = $criterio;
+
+        $datos['usuarios'] = DB::table('users')
+        ->join('accion_mejoras','accion_mejoras.responsable','=','users.id')
+        ->where(''.$criterio,'LIKE','%'.$texto.'%')
+        ->select('users.name','accion_mejoras.nombre')->paginate(10);
+        return view('usuario.search',$datos);
     }
 }

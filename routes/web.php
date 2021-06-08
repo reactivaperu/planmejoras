@@ -21,7 +21,10 @@ Route::group(['middleware'=>'auth'],function(){
 });
 
 /* ROUTES APP  */
+Route::get('usuarios/search',[UsuarioController::class, 'search'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('usuarios', UsuarioController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
+
+Route::get('reportes',[PlanMejoraController::class, 'show'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 Route::resource('planes', PlanMejoraController::class)->middleware('auth'); // MIDDLEWARE AUTHICATION RUN
 
 Route::get('acciones/create/{idPlan}',[AccionMejoraController::class, 'create'])->middleware('auth'); // MIDDLEWARE AUTHICATION RUN

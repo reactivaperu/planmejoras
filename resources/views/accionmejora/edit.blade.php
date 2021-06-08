@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Editar acción de mejora</h1>
+    <h1>Ver acción de mejora</h1>
     <form action="{{ url( '/acciones/'.$accion->id ) }}" method="post">
         @csrf
         {{ method_field('PATCH') }}
@@ -10,7 +10,7 @@
         
         <div class="form-group w-100">
             <label for="encargados">Encargados</label>
-            <select class="form-control w-100" name="encargados[]" id="encargados" multiple="multiple">
+            <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control w-100" name="encargados[]" id="encargados" multiple="multiple">
                 @if(isset($users))
                 @foreach( $users as $user )
                 <option value="{{ $user->id }}" 
@@ -31,7 +31,7 @@
 
         <div class="form-group w-100">
             <label for="estandares">Estandares</label>
-            <select class="form-control w-100" name="estandares[]" id="estandares" multiple="multiple">
+            <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control w-100" name="estandares[]" id="estandares" multiple="multiple">
                 @if(isset($estandares))
                 @foreach( $estandares as $estandar )
                 <option value="{{ $estandar->id }}" 
@@ -50,7 +50,7 @@
 
         <div class="form-group">
             <label for="resultado">Resultados</label>
-            <select class="form-control" name="resultados[]" id="resultados" multiple="multiple">
+            <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="resultados[]" id="resultados" multiple="multiple">
                 @if(isset($resultados))
                 @foreach( $resultados as $resultado )
                 <option value="{{ $resultado->id }}" 
@@ -69,7 +69,7 @@
 
         <div class="form-group">
             <label for="indicadores">Indicadores</label>
-            <select class="form-control" name="indicadores[]" id="indicadores" multiple="multiple">
+            <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="indicadores[]" id="indicadores" multiple="multiple">
                 @if(isset($indicadores))
                 @foreach( $indicadores as $indicador )
                 <option value="{{ $indicador->id }}" 
@@ -88,10 +88,13 @@
     
         <div class="form-group" hidden>
             <label for="idPlan">Plan</label>
-            <input class="form-control" type="text" name="idPlan" id="idPlan" value="{{ isset($accion->idPlan)?$accion->idPlan:old('idPlan') }}" placeholder="Plan">
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="idPlan" id="idPlan" value="{{ isset($accion->idPlan)?$accion->idPlan:old('idPlan') }}" placeholder="Plan">
         </div>
 
+
+        @if(Auth::user()->tipo === 'Administrador')
         <input class="btn btn-success" type="submit" value="Editar datos">
+        @endif
         <a class="btn btn-primary" href="{{ url()->previous() }}">Regresar</a>
     </form>
     <br>

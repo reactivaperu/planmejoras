@@ -6,7 +6,10 @@
     </div>
 @endif
 
+@if(Auth::user()->tipo === 'Administrador')
 <a href="{{ url('/actividades/create/'.$idAccion) }}" class="btn btn-success">Agregar actividad</a>
+@endif
+
 <br>
 <br>
 @if(isset($actividades))
@@ -20,7 +23,9 @@
             <th>Estado</th>
             <th>Archivo</th>
             <th>Ver</th>
+            @if(Auth::user()->tipo === 'Administrador')
             <th></th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -43,6 +48,7 @@
             <td>
                 <a href="{{ url('/actividades/'.$actividad->id.'/edit') }}" title="Ver actividad"><i class="fas fa-clipboard-list" style="color:#117a8b;font-size:20px;"></i></a>
             </td>
+            @if(Auth::user()->tipo === 'Administrador')
             <td>
                 <form method="post" action="{{ url( '/actividades/'.$actividad->id ) }}" class="d-inline">
                     @csrf
@@ -52,6 +58,7 @@
                     </button>
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
     </tbody>
