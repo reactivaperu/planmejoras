@@ -16,6 +16,7 @@ class CreateAccionMejorasTable extends Migration
         Schema::create('accion_mejoras', function (Blueprint $table) {
             $table->id();
             $table->integer('idPlan');
+            $table->string('codigo');
             $table->string('nombre');
             //$table->integer('resultado');
             $table->integer('valor');
@@ -27,7 +28,7 @@ class CreateAccionMejorasTable extends Migration
             $table->string('metas');
             $table->integer('responsable');
             $table->string('estado');
-            $table->string('avance');
+            $table->integer('avance');
             //$table->string('indicador');
             $table->string('prioridad');
             $table->timestamps();

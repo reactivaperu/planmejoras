@@ -109,10 +109,20 @@ class UsuarioController extends Controller
         $datos['texto'] = $texto;
         $datos['criterio'] = $criterio;
 
-        $datos['usuarios'] = DB::table('users')
-        ->join('accion_mejoras','accion_mejoras.responsable','=','users.id')
-        ->where(''.$criterio,'LIKE','%'.$texto.'%')
-        ->select('users.name','accion_mejoras.nombre')->paginate(10);
+        if($criterio==='users.name'){
+            $datos['usuarios'] = DB::table('users')
+            ->join('accion_mejoras','accion_mejoras.responsable','=','users.id')
+            ->where(''.$criterio,'LIKE','%'.$texto.'%')
+            ->orderBy(''.$criterio)
+            ->select('users.name','accion_mejoras.*')->paginate(10);
+        } else {
+            $datos['usuarios'] = DB::table('users')
+            ->join('accion_mejoras','accion_mejoras.responsable','=','users.id')
+            ->where(''.$criterio,'LIKE','%'.$texto.'%')
+            ->orderByDesc(''.$criterio)
+            ->select('users.name','accion_mejoras.*')->paginate(10);
+        }
+        
         return view('usuario.search',$datos);
     }
 }

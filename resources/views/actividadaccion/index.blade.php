@@ -25,6 +25,7 @@
             <th>Ver</th>
             @if(Auth::user()->tipo === 'Administrador')
             <th></th>
+            <th></th>
             @endif
         </tr>
     </thead>
@@ -57,6 +58,38 @@
                         <i class="fas fa-minus-circle" style="color:red;font-size:20px;"></i>
                     </button>
                 </form>
+            </td>
+            <td>
+                <!-- Modal -->
+                <div id="myModal-{{$actividad->id}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                    <form method="post" action="{{ url( '/actividades/'.$actividad->id ) }}" method="post">
+                        @csrf
+                        {{ method_field('PATCH') }}
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Observación</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <input class="form-control" type="text" name="observacion" id="observacion" value="{{ isset($actividad->observacion)?$actividad->observacion:old('observacion') }}" placeholder="Observación">
+                                </div>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label for="idAccion">Accion</label>
+                                <input class="form-control" type="text" name="idAccion" id="idAccion" value="{{ isset($actividad->idAccion)?$actividad->idAccion:old('idAccion') }}" placeholder="Accion">
+                            </div>
+                            <div class="modal-footer">
+                                <button type='submit' value='submit' title="Guardar archivo" type="button" class="btn btn-primary" onclick="return confirm('¿Quieres Guardar?')">Guardar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>  
+                </div>
+                <!-- Modal -->
+                <i class="fas fa-comment-alt" style="color:#343a40;font-size:20px;cursor:pointer;" data-toggle="modal" data-target="#myModal-{{$actividad->id}}"></i>
             </td>
             @endif
         </tr>

@@ -6,8 +6,12 @@ INSERT INTO estandars (id, factor, dimension, estandar, denominacion) VALUES
 (4, 'F1', 'GE', '4', 'Sostenibilidad');
 
 INSERT INTO resultados (id, codigo, detalle) VALUES
-(1, 'Resultado [a]', 'Conocimientos de computacion: la capacidad'),
-(2, 'Resultado [b]', 'Analisis de Problemas: La capacidad');
+(1, '[a]', 'Conocimientos de computacion: la capacidad'),
+(2, '[b]', 'Analisis de Problemas: La capacidad'),
+(3, '[c]', 'Conocimientos de computacion: la capacidad'),
+(4, '[d]', 'Analisis de Problemas: La capacidad'),
+(5, '[e]', 'Analisis de Problemas: La capacidad'),
+(6, '[f]', 'Analisis de Problemas: La capacidad');
 
 INSERT INTO indicadors (id, codigo, detalle) VALUES
 (1, 'A1', 'Aplica conocimientos de ciencias'),

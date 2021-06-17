@@ -21,7 +21,7 @@
                     @endif
                 @endforeach
                 @endif
-                >{{ $user->name }}</option>
+                >{{ $user->name }} - N° Acciones ({{ $user->acciones }})</option>
                 @endforeach
                 @endif
             </select>

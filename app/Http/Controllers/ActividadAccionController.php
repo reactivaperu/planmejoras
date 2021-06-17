@@ -56,7 +56,7 @@ class ActividadAccionController extends Controller
         if($request->hasFile('archivo')){
             $datosActividad['archivo'] = $request->file('archivo')->store('uploads','public');
         } else { $datosActividad['archivo'] = 'FALTA ARCHIVO'; }
-        
+        $datosActividad['observacion'] = '';
         $fdate = $request->fechaInicio;
         $tdate = $request->fechaFin;
         $datetime1 = new DateTime($fdate);
@@ -110,20 +110,26 @@ class ActividadAccionController extends Controller
             $datosActividad['archivo'] = $request->file('archivo')->store('uploads','public');
             ActividadAccion::where('id','=',$id)->update($datosActividad);
             return redirect('/acciones/asignado')->with('mensaje','Archivo subido!');   
-        } else { 
-            $fdate = $request->fechaInicio;
-            $tdate = $request->fechaFin;
-            $datetime1 = new DateTime($fdate);
-            $datetime2 = new DateTime($tdate);
-            $interval = $datetime1->diff($datetime2);
-            $daysDiff = $interval->format('%a');//now do whatever you like with $days
-            $semanas = floor($daysDiff / 7);
-            $days = floor($daysDiff % 7);
-            $duracion = $semanas.' semana(s)';
-            if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
-            $datosActividad['duracion']= $duracion;
-            ActividadAccion::where('id','=',$id)->update($datosActividad);
-            return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');   
+        } else {
+            if($request->observacion){
+                $datosActividad['observacion'] = $request->observacion;
+                ActividadAccion::where('id','=',$id)->update($datosActividad);
+                return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Observación guardada');    
+            } else {
+                $fdate = $request->fechaInicio;
+                $tdate = $request->fechaFin;
+                $datetime1 = new DateTime($fdate);
+                $datetime2 = new DateTime($tdate);
+                $interval = $datetime1->diff($datetime2);
+                $daysDiff = $interval->format('%a');//now do whatever you like with $days
+                $semanas = floor($daysDiff / 7);
+                $days = floor($daysDiff % 7);
+                $duracion = $semanas.' semana(s)';
+                if($days>0){ $duracion = $duracion.' con '.$days.' dias.'; }
+                $datosActividad['duracion']= $duracion;
+                ActividadAccion::where('id','=',$id)->update($datosActividad);
+                return redirect('acciones/' . $datosActividad['idAccion'] . '/edit')->with('mensaje','Actividad mejora modificada');   
+            }
         }
     }
 

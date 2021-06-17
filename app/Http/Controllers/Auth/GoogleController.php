@@ -41,7 +41,7 @@ class GoogleController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id'=> $user->id,
-                    'tipo' => 'invitado'
+                    'tipo' => 'Invitado'
                 ]);
                 Auth::login($newUser);
                 return redirect('/home');

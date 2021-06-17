@@ -12,7 +12,6 @@
 @endif
 
 <h1>PLANES DE MEJORA</h1>
-
 @if(Auth::user()->tipo === 'Administrador')
     <a href="{{ url('/planes/create') }}" class="btn btn-success">Registrar plan</a>
 @endif

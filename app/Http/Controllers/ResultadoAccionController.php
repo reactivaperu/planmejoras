@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\resultado_accion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResultadoAccionController extends Controller
 {
@@ -12,9 +13,16 @@ class ResultadoAccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public static function index($idAccion)
     {
         //
+        $datos['resultados'] = 
+        DB::table('resultado_accions')
+        ->join('resultados','resultado_accions.idResultado','=','resultados.id')
+        ->where('resultado_accions.idAccion','=',$idAccion)
+        ->groupBy(['resultado_accions.idAccion', 'resultado_accions.idResultado'])
+        ->select('resultados.codigo')->paginate();
+        return view('accionmejora.resultados',$datos);
     }
 
     /**

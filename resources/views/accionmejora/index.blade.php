@@ -30,7 +30,7 @@
         <tr>
             <td>{{ $accion->nombre }}</td>
             <td>{{ $accion->duracion }}</td>
-            <td>{{ $accion->avance }}</td>
+            <td>{{ $accion->avance }}%</td>
             <td>
                 <a href="{{ url('/acciones/'.$accion->id.'/edit') }}" title="Ver accion"><i class="fas fa-clipboard-list" style="color:#117a8b;font-size:20px;"></i></a>
             </td>

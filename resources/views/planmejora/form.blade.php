@@ -48,6 +48,7 @@
 <div class="form-group">
     <label for="estado">Estado</label>
     <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="estado" id="estado" value="{{ isset($plan->estado)?$plan->estado:old('estado') }}">
+        <option value="No Aprobado" {{ isset($plan->estado)? ($plan->estado=='No Aprobado'?'selected':'') : '' }}>No Aprobado</option>
         <option value="Iniciado" {{ isset($plan->estado)? ($plan->estado=='Iniciado'?'selected':'') : '' }}>Iniciado</option>
         <option value="Finalizado" {{ isset($plan->estado)? ($plan->estado=='Finalizado'?'selected':'') : '' }}>Finalizado</option>
         <option value="Cancelado" {{ isset($plan->estado)? ($plan->estado=='Cancelado'?'selected':'') : '' }}>Cancelado</option>

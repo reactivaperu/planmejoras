@@ -23,6 +23,7 @@ class CreateActividadAccionsTable extends Migration
             $table->string('duracion');
             $table->string('estado');
             $table->string('archivo');
+            $table->string('observacion');
             $table->timestamps();
         });
     }

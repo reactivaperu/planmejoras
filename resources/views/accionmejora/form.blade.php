@@ -12,6 +12,10 @@
 <div class="row">
     <div class="col-6 p-2">
         <div class="form-group">
+            <label for="codigo">Codigo</label>
+            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="codigo" id="codigo" value="{{ isset($accion->codigo)?$accion->codigo:old('codigo') }}" placeholder="Codigo">
+        </div>
+        <div class="form-group">
             <label for="nombre">Nombre</label>
             <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="nombre" id="nombre" value="{{ isset($accion->nombre)?$accion->nombre:old('nombre') }}" placeholder="Nombre">
         </div>
@@ -33,17 +37,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="fechaInicio">Fecha de Inicio</label>
-            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaInicio" id="fechaInicio" value="{{ isset($accion->fechaInicio)?$accion->fechaInicio:old('fechaInicio') }}">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio</label>
+                    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaInicio" id="fechaInicio" value="{{ isset($accion->fechaInicio)?$accion->fechaInicio:old('fechaInicio') }}">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin</label>
+                    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($accion->fechaFin)?$accion->fechaFin:old('fechaFin') }}">
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="fechaFin">Fecha de Fin</label>
-            <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="date" name="fechaFin" id="fechaFin" value="{{ isset($accion->fechaFin)?$accion->fechaFin:old('fechaFin') }}">
-        </div>
-
         <div class="form-group" hidden>
             <label for="duracion">Duración (CALCULADO)</label>
             <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="number" name="duracion" id="duracion" value="{{ isset($accion->duracion)?$accion->duracion:old('duracion') }}" placeholder="Duracion">
@@ -64,8 +71,8 @@
         <div class="row">
             <div class="col-6">    
                 <div class="form-group">
-                    <label for="avance">Avance</label>
-                    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="text" name="avance" id="avance" value="{{ isset($accion->avance)?$accion->avance:old('avance') }}" placeholder="Avance">
+                    <label for="avance">Avance (%)</label>
+                    <input <?php echo Auth::user()->tipo==='Administrador'?'':'readonly';?> class="form-control" type="number" name="avance" id="avance" value="{{ isset($accion->avance)?$accion->avance:old('avance') }}" placeholder="0%">
                 </div>
             </div>
             <div class="col-6">
@@ -93,7 +100,7 @@
     <select <?php echo Auth::user()->tipo==='Administrador'?'':'disabled';?> class="form-control" name="responsable" id="responsable">
         @if(isset($users))
         @foreach( $users as $user )
-        <option value="{{ $user->id }}" {{ isset($accion->responsable)? ($accion->responsable==$user->id ? 'selected':'') : '' }} >{{ $user->name }}</option>                
+        <option value="{{ $user->id }}" {{ isset($accion->responsable)? ($accion->responsable==$user->id ? 'selected':'') : '' }} >{{ $user->name }} - N° Acciones ({{ $user->acciones }})</option>                
         @endforeach
         @endif
     </select>

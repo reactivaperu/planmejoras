@@ -17,6 +17,7 @@ use App\Models\estandar;
 use App\Models\estandar_accion;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccionMejoraController extends Controller
 {
@@ -54,6 +55,7 @@ class AccionMejoraController extends Controller
     {
         $campos = [
             'idPlan' => 'required|integer',
+            'codigo' => 'required|string|max:255',
             'nombre' => 'required|string|max:255',
             //'resultado' => 'required|integer',
             'valor' => 'required|integer',
@@ -65,7 +67,7 @@ class AccionMejoraController extends Controller
             'metas' => 'required|string|max:255',
             //'responsable' => 'required|integer',
             'estado' => 'required|string|max:255',
-            'avance' => 'required|string|max:255',
+            'avance' => 'required|integer',
             //'indicador' => 'required|string|max:255',
             'prioridad' => 'required|string|max:255'
         ];
@@ -75,7 +77,6 @@ class AccionMejoraController extends Controller
         ];
         $this->validate($request,$campos,$mensaje);
         $datosAccion = request()->except('_token');
-
 
         $fdate = $request->fechaInicio;
         $tdate = $request->fechaFin;
@@ -115,7 +116,10 @@ class AccionMejoraController extends Controller
     {
         $accion = AccionMejora::findOrFail($id);
         $actividades = ActividadAccion::where('idAccion','=',$accion->id)->paginate(10);
-        $users = User::all();
+        
+        //$users = User::all();
+        $users = DB::select('SELECT U.id, U.name,(SELECT COUNT(AM.id) FROM accion_mejoras AM WHERE AM.responsable = U.id) AS acciones FROM users U');
+
         $encargados = encargado_accion::where('idAccion','=',$accion->id)->get();
         $estandares = estandar::all();
         $estandares_accion = estandar_accion::where('idAccion','=',$accion->id)->get();

@@ -17,7 +17,15 @@ class PlanMejoraController extends Controller
      */
     public function index()
     {
-        $datos['plan_mejoras'] = DB::table('plan_mejoras')->join('users','plan_mejoras.creador','=','users.id')->select('plan_mejoras.*','users.name')->paginate(10);
+        if(auth()->user()->tipo === 'Administrador'){
+            $datos['plan_mejoras'] = DB::table('plan_mejoras')->join('users','plan_mejoras.creador','=','users.id')->select('plan_mejoras.*','users.name')->paginate(10);
+        } else {
+            $datos['plan_mejoras'] = 
+            DB::table('plan_mejoras')
+            ->join('users','plan_mejoras.creador','=','users.id')
+            ->where('plan_mejoras.estado','<>','No Aprobado')
+            ->select('plan_mejoras.*','users.name')->paginate(10);
+        }
         return view('planmejora.index', $datos);
     }
 
@@ -67,9 +75,9 @@ class PlanMejoraController extends Controller
      */
     public function show(PlanMejora $planMejora)
     {
-        $datos['plan_mejoras'] = DB::table('plan_mejoras')
-        ->join('users','plan_mejoras.creador','=','users.id')
-        ->select('plan_mejoras.*','users.name')->paginate(10);
+        $datos['accion_mejoras'] = DB::table('accion_mejoras')
+        ->join('users','accion_mejoras.responsable','=','users.id')
+        ->select('accion_mejoras.*','users.name')->paginate(10);
         return view('planmejora.reporte', $datos);
     }
 

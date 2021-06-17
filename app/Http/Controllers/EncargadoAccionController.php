@@ -16,7 +16,12 @@ class EncargadoAccionController extends Controller
     public static function index($idAccion)
     {
         //
-        $datos['encargados'] = DB::table('encargado_accions')->join('users','encargado_accions.idUsuario','=','users.id')->where('encargado_accions.idAccion','=',$idAccion)->select('users.name')->paginate();
+        $datos['encargados'] = 
+        DB::table('encargado_accions')
+        ->join('users','encargado_accions.idUsuario','=','users.id')
+        ->where('encargado_accions.idAccion','=',$idAccion)
+        ->groupBy(['encargado_accions.idAccion', 'encargado_accions.idUsuario'])
+        ->select('users.name')->paginate();
         return view('usuario.encargados',$datos);
     }
 
